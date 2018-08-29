@@ -1,0 +1,27 @@
+*** Settings ***
+Library     Collections
+Library     mongo.MongoDB       localhost:27017     billing
+Library     restRequest.RestRequest
+#Suite Setup     suiteInitialization
+
+
+*** Variable ***
+${REST_SERVER_ADDRESS}		http://localhost:5000
+
+
+*** Keywords ***
+suiteInitialization
+    deleteDatabase   billing
+
+
+
+
+*** Test Cases ***
+
+Scrape the website
+    # find the billable entity by id
+    ${response} =       postJson 	${REST_SERVER_ADDRESS}/api/v1.0/scrape          data={}
+    ${statusCode} =     Set Variable    ${response.status_code}
+    Should Be Equal As Integers        ${statusCode}       200
+
+
