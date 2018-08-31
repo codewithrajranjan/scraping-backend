@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 
 class FreeCodeCamp():
 
+    identifier = "freecodecamp"
+
     def __init__(self):
         self.url = "https://medium.freecodecamp.org/"
-        self.identifier = "freecodecamp"
         self.posts = []
 
     def scrape(self):

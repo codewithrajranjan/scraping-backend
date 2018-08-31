@@ -10,24 +10,27 @@ from core import Post
 
 
 
-class ScrapingResource(Resource):
+class ScrapingResourceByIdentifier(Resource):
 
-    def post(self):
+    def post(self,identifier):
 
         allNewPosts = ScrapingEngine()\
-                    .scrape()\
-                    .insertNewPostsInDatabase() \
-                    .sendEmail()
+                    .scrape(identifier=identifier)
         
 
-        response =  {
-                "newPosts" : len(allNewPosts.allPosts)
-        }
 
-        return response,200
+        return 200
 
 
-    
+
+    def get(self):
+
+        whereClause = {}
+        result = DatabaseManager.find(Post,whereClause,responseFormat="json")
+        
+        return result,200
+
+
     def options(self):
         return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
                {'Access-Control-Allow-Origin': '*',

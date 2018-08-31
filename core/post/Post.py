@@ -9,10 +9,11 @@ class Post():
 
     def __init__(self,**kwargs):
 
-        self.id = kwargs.get('id')
+        self._id = kwargs.get('_id')
         self.label = kwargs.get('label') or raiseException("Label not found in kwargs")
         self.identifier = kwargs.get('identifier') or raiseException("Identifier not found ")
         self.link = kwargs.get('link') or raiseException("link not found in kwargs")
+        self.status = kwargs.get('status')
 
 
 
@@ -22,5 +23,6 @@ class Post():
 
                 "label" : self.label,
                 "identifier" : self.identifier,
-                "link" : self.link
+                "link" : self.link,
+                "status" : self.status
         }

@@ -22,49 +22,21 @@ responseList = {
             },
 
         ####################################################################
-        # Billable Entity Code
+        # Posts 
         ####################################################################
-        'BILLABLE_ENTITY_CREATE_SUCCESS':{
-            'code'          : 'billableEntityCreateSuccess',
-            'statusCode'    : '200',
-            'message'       : 'Billable Entity successfully Created',
-            },
-        'BILLABLE_ENTITY_CREATE_FAILED':{
-            'code'          : 'billableEntityCreateFailed',
-            'statusCode'    : '500',
-            'message'       : 'Failed to create billable entity',
-            },
-        'BILLABLE_ENTITY_UPDATE_SUCCESS':{
-            'code'          : 'billableEntityUpdateSuccess',
-            'statusCode'    : '200',
-            'message'       : 'Billable Entity successfully updated',
-            },
-        'BILLABLE_ENTITY_UPDATE_FAILED':{
-            'code'          : 'billableEntityUpdateFailed',
-            'statusCode'    : '500',
-            'message'       : 'Failed to update billable entity',
-            },
-        'BILLABLE_ENTITY_FOUND':{
-            'code'          : 'billableEntityFound',
-            'statusCode'    : '200',
-            'message'       : 'Billable Entity found',
-            },
-        'BILLABLE_ENTITY_NOT_FOUND':{
-            'code'          : 'billableEntityNotFound',
+        'POST_NOT_FOUND':{
+            'code'          : 'postNotFound',
             'statusCode'    : '404',
-            'message'       : 'Billable Entity not found',
+            'message'       : 'Post not found',
             },
-        ####################################################################
-        # Invoice Code
-        ####################################################################
-        'INVOICE_FOUND': {
-            'code': 'invoiceFound',
-            'statusCode': '200',
-            'message': 'Invoice found',
+        'POST_UPDATE_SUCCESS':{
+            'code'          : 'postUpdateSuccess',
+            'statusCode'    : '200',
+            'message'       : 'Successfully updated post',
             },
-        'INVOICE_NOT_FOUND': {
-            'code': 'invoicNotFound',
-            'statusCode': '404',
-            'message': 'Invoice not found',
+        'POST_UPDATE_FAILED':{
+            'code'          : 'postUpdateFailed',
+            'statusCode'    : '500',
+            'message'       : 'Failed to update post',
             },
         }

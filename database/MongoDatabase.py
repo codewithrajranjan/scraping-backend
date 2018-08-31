@@ -5,6 +5,7 @@ from datetime import datetime
 from bson.json_util import dumps, loads
 from bson import json_util
 import  simplejson as json
+from bson import ObjectId
 
 
 class MongoDatabase():
@@ -40,7 +41,10 @@ class MongoDatabase():
         modelData = entityInstance.getModelData()
         updateTime = datetime.now().strftime(DATE_FORMAT)
         modelData['updatedAt'] = updateTime
-        self.client[collectionName].update_one({'_id': entityInstance._id},{"$set": modelData})
+        self.client[collectionName].update_one(
+                {'_id': ObjectId(entityInstance._id["$oid"])},
+                {"$set": modelData}
+        )
 
         ## if insert into data base is successfull then add mongodb id in the entity instance
         entityInstance.updatedAt = updateTime

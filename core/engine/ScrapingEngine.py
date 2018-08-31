@@ -7,12 +7,16 @@ class ScrapingEngine:
 
     def __init__(self):
         logging.debug("Starting scraping")
+        self.allPosts = []
 
-
-    def scrape(self):
-        allPosts = []
-
+    
+    
+    def scrape(self,identifier=None):
+        
         for eachScrapingClass in SCRAPING_FUNCTIONS:
+
+            if identifier != None and eachScrapingClass.identifier != identifier:
+                continue;
 
             scrapingInstance = eachScrapingClass() 
 
@@ -22,10 +26,28 @@ class ScrapingEngine:
             newPost = self.filterNewPost(posts)
             
             if len(newPost) != 0:
-                allPosts.extend(newPost)
+                self.allPosts.extend(newPost)
+
+        return self
 
 
-        return allPosts
+    def insertNewPostsInDatabase(self):
+
+        postIdentifiers = ""
+
+        for eachPost in self.allPosts:
+            postIdentifiers += eachPost['identifier'] + " - "
+            eachPost['status'] = "new"
+            DatabaseManager.create(Post(**eachPost))
+
+        return self
+
+
+    def sendEmail(self):
+        print("EmailSent")
+        return self
+
+
 
     def filterNewPost(self,postFromScrapingArray):
 
@@ -34,7 +56,7 @@ class ScrapingEngine:
 
         for eachPost in postFromScrapingArray: 
             labelArray.append(eachPost['label'])
-            labelBasedDict[eachPost['label']] = eachPost
+            #labelBasedDict[eachPost['label']] = eachPost
 
             
         whereClause = {
@@ -48,19 +70,19 @@ class ScrapingEngine:
             # returning empty array as no new post has been found
             return [] 
 
+        remaingingPost = []
         # if the length don't match then we need only return new posts
-        for eachPostInDatabase in alreadyExistingPostInDatabase:
-            label = eachPostInDatabase['label']
-            # removing data from label based dictionary
-            if label in labelBasedDict:
-                del labelBasedDict[label]
+        for eachNewPost in postFromScrapingArray:
+            label = eachNewPost['label']
+            flag = True
+            for eachPostInDatabase in alreadyExistingPostInDatabase:
+                if label == eachPostInDatabase['label']:
+                    flag = False
 
-        
+            if flag == True :
+                remaingingPost.append(eachNewPost)
 
         # getting post if it is remaining in labelBasedDict
-        remaingingPost = []
-        for eachKey in labelBasedDict:
-            remaingingPost.append(labelBasedDict.get(eachKey))
 
         return remaingingPost
 
