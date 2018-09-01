@@ -26,7 +26,6 @@ itsdangerous==0.24
 jedi==0.12.1
 Jinja2==2.10
 jsonschema==2.6.0
-line-profiler==2.1.2
 Markdown==2.6.11
 MarkupSafe==1.0
 marshmallow==2.15.4
@@ -68,4 +67,3 @@ wcwidth==0.1.7
 webargs==4.0.0
 Werkzeug==0.14.1
 WTForms==2.2.1
-yappi==0.98

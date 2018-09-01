@@ -50,7 +50,7 @@ if __name__ == '__main__':
     bootstrap()
     from api import *
     #calling run function
-    flaskAppInstance.run(host='0.0.0.0', port=10000, debug=True,use_reloader=True)
+    flaskAppInstance.run(host='0.0.0.0', port=9002, debug=True,use_reloader=True)
 
 
 
