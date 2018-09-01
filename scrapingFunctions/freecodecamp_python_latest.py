@@ -15,13 +15,19 @@ class FreeCodeCampPythonLatest():
         data = soup.select(".postArticle.postArticle--short")
         
         for eachData in data:
-            data = {
-                     "label" : eachData.find('div',class_='section-content').h3.string,
-                     "link" : eachData.find('div',class_='postArticle-content').parent.attrs['href'],
-                     "identifier" : self.identifier,
-                     "tags" : ["python"]
-             }
-            self.posts.append(data)
+            try :
+                    data = {
+                             "label" : eachData.find('div',class_='section-content').h3.string,
+                             "link" : eachData.find('div',class_='postArticle-content').parent.attrs['href'],
+                             "identifier" : self.identifier,
+                             "tags" : ["python"]
+                     }
+                    self.posts.append(data)
+
+            except Exception as e:
+                logging.error("Error while parsing data",str(e))
+                continue
+
 
         return self.posts
 
