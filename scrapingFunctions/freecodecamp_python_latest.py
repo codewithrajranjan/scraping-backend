@@ -18,7 +18,8 @@ class FreeCodeCampPythonLatest():
             data = {
                      "label" : eachData.find('div',class_='section-content').h3.string,
                      "link" : eachData.find('div',class_='postArticle-content').parent.attrs['href'],
-                     "identifier" : self.identifier
+                     "identifier" : self.identifier,
+                     "tags" : ["python"]
              }
             self.posts.append(data)
 
