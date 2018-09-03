@@ -17,7 +17,7 @@ class FreeCodeCampPythonLatest():
         for eachData in data:
             try :
                     data = {
-                             "label" : eachData.find('div',class_='section-content').h3.string,
+                             "label" : eachData.find('div',class_='section-content').h3.string or "no label",
                              "link" : eachData.find('div',class_='postArticle-content').parent.attrs['href'],
                              "identifier" : self.identifier,
                              "tags" : ["python"]

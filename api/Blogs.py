@@ -16,7 +16,17 @@ class Blogs(Resource):
                 'status': fields.Str(missing='new',location='querystring'),
         }
 
+        
+
         argsRecieved = parser.parse(inputArgs,request)
+
+
+        # checking if status value is new then showing visited also
+        status = argsRecieved['status']
+        if status == "new":
+            argsRecieved = {
+                    "$or" : [{'status': 'new'},{'status':'visited'}]
+            }
 
         result = DatabaseManager.find(Post,argsRecieved,responseFormat="json")
 
