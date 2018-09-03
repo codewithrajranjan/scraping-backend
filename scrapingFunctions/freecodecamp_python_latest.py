@@ -1,5 +1,6 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
+import logging
 
 class FreeCodeCampPythonLatest():
 
