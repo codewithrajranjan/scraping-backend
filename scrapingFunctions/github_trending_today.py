@@ -1,6 +1,7 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
 import re
+import logging
 
 class GitHubTrendingToday():
 
@@ -16,16 +17,19 @@ class GitHubTrendingToday():
         data = soup.select(".repo-list li")
         
         for eachData in data:
-            #label = "{}{} - {}".format(eachData.h3.a.span.string,eachData.h3.a.text,eachData.p.string)
-            label = "{} - {}".format(eachData.h3.a.text,eachData.p.string)
-            newLabel = label.replace('\n',"")
-            newLabel = re.sub(' +',' ',newLabel)
-            data = {
-                     "label" : newLabel,
-                     "link" : "https://github.com{}".format(eachData.h3.a.attrs['href']),
-                     "identifier" : self.identifier
-             }
-            self.posts.append(data)
+            try :
+                #label = "{}{} - {}".format(eachData.h3.a.span.string,eachData.h3.a.text,eachData.p.string)
+                label = "{} - {}".format(eachData.h3.a.text,eachData.p.string)
+                newLabel = label.replace('\n',"")
+                newLabel = re.sub(' +',' ',newLabel)
+                data = {
+                         "label" : newLabel,
+                         "link" : "https://github.com{}".format(eachData.h3.a.attrs['href']),
+                         "identifier" : self.identifier
+                 }
+                self.posts.append(data)
+            except Exception as e:
+                logging.error(str(e))
 
         return self.posts
 

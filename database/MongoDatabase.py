@@ -16,7 +16,7 @@ class MongoDatabase():
         logging.debug("##############################################")
 
         try:
-            self.client = MongoClient("mongodb://localhost:27017/")
+            self.client = MongoClient("mongodb://selftuts_developer:justdoit956@ds141972.mlab.com:41972/scraping")
             self.client = self.client['scraping']
         except Exception as e:
             print(e)
