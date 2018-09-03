@@ -38,7 +38,6 @@ class ScrapingEngine:
         for eachPost in self.allPosts:
             postIdentifiers += eachPost['identifier'] + " - "
             eachPost['status'] = "new"
-            print(eachPost)
             DatabaseManager.create(Post(**eachPost))
 
         return self
