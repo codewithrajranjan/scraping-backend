@@ -4,6 +4,7 @@ from .techadmin import TechAdmin
 from .freecodecamp_python_latest import FreeCodeCampPythonLatest
 from .freecodecamp_nodejs_latest import FreeCodeCampNodeJSLatest
 from .github_trending_today import GitHubTrendingToday
+from .digital_ocean_community import DigitalOceanCommunity
 
 
 
@@ -12,6 +13,7 @@ SCRAPING_FUNCTIONS = [
         TechAdmin,
         FreeCodeCampPythonLatest,
         FreeCodeCampNodeJSLatest,
-        GitHubTrendingToday
+        GitHubTrendingToday,
+        DigitalOceanCommunity
 
         ]

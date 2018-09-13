@@ -20,7 +20,7 @@ suiteInitialization
 
 Scrape the website by identifier
     # find the billable entity by id
-    ${identifier} =     Set Variable        github
+    ${identifier} =     Set Variable        digital-ocean
     ${response} =       postJson 	${REST_SERVER_ADDRESS}/api/v1.0/scrape/identifier/${identifier}          data={}
     ${statusCode} =     Set Variable    ${response.status_code}
     Should Be Equal As Integers        ${statusCode}       200
