@@ -2,8 +2,9 @@ from utils import RequestService
 from bs4 import BeautifulSoup
 import re
 import logging
+from celery import Task
 
-class DigitalOceanCommunity():
+class DigitalOceanCommunity(Task):
 
     identifier = "digital-ocean"
 
@@ -29,4 +30,7 @@ class DigitalOceanCommunity():
 
         return self.posts
 
-
+    def run(self,context):
+        scrapedPost = self.scrape()
+        context['posts'].extend(scrapedPost)
+        return context

@@ -1,8 +1,9 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
 import logging
+from celery import Task
 
-class FreeCodeCampPythonLatest():
+class FreeCodeCampPythonLatest(Task):
 
     identifier = "freecodecamp-python-latest"
 
@@ -32,4 +33,7 @@ class FreeCodeCampPythonLatest():
 
         return self.posts
 
-
+    def run(self,context):
+        scrapedPost = self.scrape()
+        context['posts'].extend(scrapedPost)
+        return context

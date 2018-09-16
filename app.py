@@ -1,6 +1,7 @@
 import logging, os, sys
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from celery import Celery
 from flask_mongoengine import MongoEngine
 from uuid import uuid4
 LOGLEVEL = "DEBUG"
@@ -24,11 +25,13 @@ logging.getLogger('sqlalchemy.pool').setLevel(logging.DEBUG)
 # Setting the timezone for python time library
 time.tzset()
 
+# creating flask app instance
 flaskAppInstance = Flask(__name__)
+
 cors = CORS(flaskAppInstance, resources={r"/api/*": {"origins": "*"}})
 
 flaskAppInstance.config['SECRET_KEY'] = 'top-secret!'
-#flaskAppInstance.config['MONGODB_SETTINGS'] = dict(host=DB_CONNECT_STRING)
+
 
 
 db = None

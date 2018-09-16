@@ -1,8 +1,9 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
 import logging
+from celery import Task
 
-class FreeCodeCampNodeJSLatest():
+class FreeCodeCampNodeJSLatest(Task):
 
     identifier = "freecodecamp-nodejs-latest"
 
@@ -25,9 +26,14 @@ class FreeCodeCampNodeJSLatest():
                      }
                     self.posts.append(data)
             except Exception as e:
-                logging.error("Error while parsing data",str(e))
+                #logging.error("Error while parsing data",str(e))
+                logging.error("Error while parsing data")
                 continue
 
         return self.posts
 
 
+    def run(self,context):
+        scrapedPost = self.scrape()
+        context['posts'].extend(scrapedPost)
+        return context

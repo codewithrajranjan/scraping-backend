@@ -1,7 +1,8 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
+from celery import Task
 
-class TechAdmin():
+class TechAdmin(Task):
 
     identifier = "techadmin"
 
@@ -27,4 +28,7 @@ class TechAdmin():
 
 
 
-
+    def run(self,context):
+        scrapedPost = self.scrape()
+        context['posts'].extend(scrapedPost)
+        return context

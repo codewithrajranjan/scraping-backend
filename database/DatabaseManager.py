@@ -1,8 +1,8 @@
-from pymongo import MongoClient
 from .MongoDatabase import MongoDatabase
 from .MysqlDatabase import MysqlDatabase
 import pymysql.cursors
 from config import DATABASE_LIST
+connectionPool = {}
 
 class DatabaseManager(object):
     """
@@ -19,7 +19,7 @@ class DatabaseManager(object):
         Upate entity in the database
     """
 
-    connectionPool = {}
+    connectionPool = connectionPool
 
     @classmethod 
     def __getDatabaseConnection(cls,entityInstanceOrClass):
@@ -62,6 +62,7 @@ class DatabaseManager(object):
 
         # return connection
         return cls.connectionPool[databaseToFind]
+
 
     @classmethod
     def getSession(cls,databaseName):
@@ -183,20 +184,3 @@ class DatabaseManager(object):
 
         return connectionDict
 
-
-
-
-
-
-
-
- 
-
-        
-
-     
-        
-
-
-
-       

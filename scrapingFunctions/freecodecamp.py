@@ -1,7 +1,8 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
+from celery import Task
 
-class FreeCodeCamp():
+class FreeCodeCamp(Task):
 
     identifier = "freecodecamp"
 
@@ -23,31 +24,7 @@ class FreeCodeCamp():
 
         return self.posts
 
-
-
-
-
-
-
-#   mapper = [
-     #           {
-     #           "url":"https://elitedatascience.com/",
-     #           "htmlSelector" : ".op-list-headline",
-     #           "labelSelector" : ["a","string"],
-     #           "linkSelector" : ["a","attrs","href"]
-     #   {
-     #           "url" : "https://medium.freecodecamp.org/tagged/web-development/",
-     #           "htmlSelector" : ".postArticle > div > a",
-     #           "labelSelector" : ["section","href"],
-     #           "linkSelector" : ["attrs","href"]
-     #   }
-     #   ]
-
-
-
-
-
-
-
-
-
+    def run(self,context):
+        scrapedPost = self.scrape()
+        context['posts'].extend(scrapedPost)
+        return context

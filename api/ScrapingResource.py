@@ -15,16 +15,9 @@ class ScrapingResource(Resource):
     def post(self):
 
         allNewPosts = ScrapingEngine()\
-                    .scrape()\
-                    .insertNewPostsInDatabase() \
-                    .sendEmail()
-        
+                    .scrape()
 
-        response =  {
-                "newPosts" : len(allNewPosts.allPosts)
-        }
-
-        return response,200
+        return {'message': 'Activated scraping job'},200
 
 
     
