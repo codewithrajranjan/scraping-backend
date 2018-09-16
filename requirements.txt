@@ -1,9 +1,12 @@
+amqp==2.3.2
 aniso8601==3.0.2
 asn1crypto==0.24.0
 atomicwrites==1.1.5
 attrs==18.1.0
 backcall==0.1.0
 beautifulsoup4==4.6.3
+billiard==3.5.0.4
+celery==4.2.1
 certifi==2018.4.16
 cffi==1.11.5
 chardet==3.0.4
@@ -26,6 +29,8 @@ itsdangerous==0.24
 jedi==0.12.1
 Jinja2==2.10
 jsonschema==2.6.0
+kombu==4.2.1
+line-profiler==2.1.2
 Markdown==2.6.11
 MarkupSafe==1.0
 marshmallow==2.15.4
@@ -63,7 +68,9 @@ SQLAlchemy==1.2.11
 traitlets==4.3.2
 typing==3.6.4
 urllib3==1.23
+vine==1.1.4
 wcwidth==0.1.7
 webargs==4.0.0
 Werkzeug==0.14.1
 WTForms==2.2.1
+yappi==0.98
