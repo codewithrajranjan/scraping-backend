@@ -8,11 +8,11 @@ from .digital_ocean_community import DigitalOceanCommunity
 from .geeks_for_geeks import GeeksForGeeks
 
 SCRAPING_FUNCTIONS = [
-        #FreeCodeCamp,
-        #TechAdmin,
-        #FreeCodeCampPythonLatest,
-        #FreeCodeCampNodeJSLatest,
-        #GitHubTrendingToday,
+        FreeCodeCamp,
+        TechAdmin,
+        FreeCodeCampPythonLatest,
+        FreeCodeCampNodeJSLatest,
+        GitHubTrendingToday,
         DigitalOceanCommunity
         #GeeksForGeeks
 ]
