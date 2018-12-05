@@ -2,6 +2,7 @@ from worker import celeryApp
 from core.post import Post
 from database import DatabaseManager
 from celery.utils.log import get_task_logger
+from datetime import datetime
 logger = get_task_logger(__name__)
 
 

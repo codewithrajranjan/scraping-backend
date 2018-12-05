@@ -6,15 +6,16 @@ from .freecodecamp_nodejs_latest import FreeCodeCampNodeJSLatest
 from .github_trending_today import GitHubTrendingToday
 from .digital_ocean_community import DigitalOceanCommunity
 from .geeks_for_geeks import GeeksForGeeks
+from .mongoDBBlog import MongoDBBlog
 
 SCRAPING_FUNCTIONS = [
         FreeCodeCamp,
-        TechAdmin,
+        #TechAdmin,
         FreeCodeCampPythonLatest,
         FreeCodeCampNodeJSLatest,
         GitHubTrendingToday,
-        DigitalOceanCommunity
-        #GeeksForGeeks
+        DigitalOceanCommunity,
+        MongoDBBlog
 ]
 
 

@@ -1,5 +1,6 @@
 import logging
 from pymongo import MongoClient
+import pymongo
 from config import DATE_FORMAT
 from datetime import datetime
 from bson.json_util import dumps, loads
@@ -53,7 +54,7 @@ class MongoDatabase():
 
     def find(self,entityClass,whereClause,databaseSession=None):
         collectionName = entityClass.collectionName
-        mongoCursor = self.client[collectionName].find(whereClause)
+        mongoCursor = self.client[collectionName].find(whereClause).sort([('createdAt', pymongo.DESCENDING)])
         data = []
         for eachData in mongoCursor:
             jsonString = dumps(eachData) 

@@ -14,6 +14,8 @@ class Blogs(Resource):
     def get(self):
         inputArgs = {
                 'status': fields.Str(missing='new',location='querystring'),
+                'tag': fields.Str(missing=None,location='querystring'),
+
         }
 
         
@@ -23,12 +25,18 @@ class Blogs(Resource):
 
         # checking if status value is new then showing visited also
         status = argsRecieved['status']
-        if status == "new":
-            argsRecieved = {
-                    "$or" : [{'status': 'new'},{'status':'visited'}]
-            }
 
-        result = DatabaseManager.find(Post,argsRecieved,responseFormat="json")
+        whereClause = {}
+
+        if status == "new":
+            whereClause["$or"] = [{'status': 'new'},{'status':'visited'}]
+        else : 
+            whereClause['status'] = argsRecieved['status']
+
+        if argsRecieved['tag'] != None :
+            whereClause['identifier'] = argsRecieved['tag']
+
+        result = DatabaseManager.find(Post,whereClause,responseFormat="json")
 
         return result,200
 

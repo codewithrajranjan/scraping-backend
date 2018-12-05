@@ -14,6 +14,7 @@ class Post():
         self.identifier = kwargs.get('identifier') or raiseException("Identifier not found ")
         self.link = kwargs.get('link') or raiseException("link not found in kwargs")
         self.status = kwargs.get('status')
+        self.createdAt = kwargs.get('createdAt')
 
 
 
@@ -21,8 +22,10 @@ class Post():
 
         return {
 
+
                 "label" : self.label,
                 "identifier" : self.identifier,
                 "link" : self.link,
-                "status" : self.status
+                "status" : self.status,
+                "createdAt" : self.createdAt
         }

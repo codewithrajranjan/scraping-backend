@@ -1,2 +1,2 @@
 source venv/bin/activate
-celery worker -c 4 -A worker.celeryApp --loglevel=info -n worker1
+watchmedo auto-restart -d . -p '*.py' --recursive  -- celery worker -c 4 -A worker.celeryApp --loglevel=info -n worker1

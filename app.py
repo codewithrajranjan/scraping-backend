@@ -32,8 +32,6 @@ cors = CORS(flaskAppInstance, resources={r"/api/*": {"origins": "*"}})
 
 flaskAppInstance.config['SECRET_KEY'] = 'top-secret!'
 
-
-
 db = None
 
 

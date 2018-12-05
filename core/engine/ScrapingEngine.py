@@ -14,7 +14,7 @@ class ScrapingEngine:
 
     
     
-    def scrape1(self,identifier=None):
+    def scrape(self,identifier=None):
 
        # if identifier !=None:
 
@@ -31,8 +31,8 @@ class ScrapingEngine:
             scrapingFunctionChain.append(registeredTaskDict[eachTask].s()) 
 
         
-        #scrapingFunctionChain.append(filterUniquePost.s())
-        #scrapingFunctionChain.append(sendEmail.s())
+        scrapingFunctionChain.append(filterUniquePost.s())
+        scrapingFunctionChain.append(sendEmail.s())
 
 
         chainInstance = chain(*scrapingFunctionChain)
@@ -42,12 +42,3 @@ class ScrapingEngine:
         chainInstance(context)
         # once the chain of task has been completed then we need to add the filter new post task
 
-    def scrape(self,identifier=None):
-
-        context = {
-            "posts" : []
-        }
-        for eachTask in registeredTaskDict:
-            registeredTaskDict[eachTask].delay(context)
-
-        
