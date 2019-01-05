@@ -33,3 +33,54 @@ class DateManager:
         now = datetime.now()
         return now.strftime(DATE_FORMAT)
 
+    @classmethod
+    def compareDate(cls,firstDate,secondDate,considerTime=False):
+        """ CompareDate method takes two input arguments
+            - firstDate(String)
+            - secondDate(String)
+
+            dateDiff(inSeconds) = firstDate-secondDate
+
+            return
+                - greater than zero if firstDate is greater than secondDate
+                - equal to zero if both the dates are equal
+                - less than zero if first date is less than zero
+        """
+        firstDateObject =  datetime.strptime(firstDate,DATE_FORMAT)
+        secondDateObject =  datetime.strptime(secondDate,DATE_FORMAT)
+
+        if considerTime == False :
+            firstDateObject = firstDateObject.date()
+            secondDateObject = secondDateObject.date()
+
+        return (firstDateObject-secondDateObject).total_seconds()
+
+    @classmethod
+    def getHumanRedableDateDiff(cls,firstDate,secondDate):
+
+        diffInseconds = cls.compareDate(firstDate,secondDate,considerTime=True)
+        
+        number =  0
+
+        text = None
+
+        if diffInseconds < 60 : 
+            number = diffInseconds
+            text = " seconds ago"
+
+        elif diffInseconds > 60 and diffInseconds < 3600 : 
+            number = diffInseconds / 60
+            text = " minutes ago"
+
+        elif diffInseconds > 3600 and diffInseconds < 86400 : 
+            number = diffInseconds / (60 * 60)
+            text = " hour ago"
+
+
+        if text == None : 
+            return ""
+
+        number = int(number)
+        return "{}{}".format(number,text)
+
+

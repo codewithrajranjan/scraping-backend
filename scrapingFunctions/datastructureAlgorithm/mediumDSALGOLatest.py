@@ -4,12 +4,12 @@ import re
 import logging
 from celery import Task
 
-class BlogTest(Task):
+class MediumDSALGOLatest(Task):
 
-    identifier = "hackerearth-notes"
+    identifier = "medium-data-structure-algorithm"
 
     def __init__(self):
-        self.url = "https://www.hackerearth.com/practice/notes/newest/"
+        self.url = "https://medium.com/tag/data-structures/latest"
         self.posts = []
 
     def scrape(self):
@@ -17,24 +17,24 @@ class BlogTest(Task):
         try :
                 response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
                 soup = BeautifulSoup(response.content,'html.parser')
-                print(soup)
-                data = soup.select(".notes-container")
-                print(data) 
+                data = soup.select(".postArticle.postArticle--short")
+                
                 for eachData in data:
 
                         try : 
 
                             data = {
-                                     "label" : eachData,
-                                     #"link" : "{}{}".format("https://www.careercup.com",eachData.find('span',class_='entry').a.attrs['href']),
-                                    "identifier" : self.identifier,
+                                     "label" : eachData.find('div',class_='section-content').h3.string,
+                                     "link" : eachData.find('div',class_='postArticle-content').parent.attrs['href'],
+                                     "identifier" : self.identifier,
+                                     "tags" : ["nodejs"]
                              }
                             self.posts.append(data)
 
                         except Exception as e :
-                            logging.error("{} === Error occured in processing  {}".format(self.identifier,e))
+                            logging.error("Error occured in processing  {}".format(self.identifier))
                             continue
-                print(self.posts);
+
                 return self.posts
 
         except Exception as e:
@@ -47,10 +47,3 @@ class BlogTest(Task):
 
 
 
-if __name__ == '__main__' :
-
-
-
-    obj = BlogTest()
-    result = obj.scrape()
-    print(result)

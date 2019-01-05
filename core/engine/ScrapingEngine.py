@@ -32,7 +32,7 @@ class ScrapingEngine:
 
         
         scrapingFunctionChain.append(filterUniquePost.s())
-        scrapingFunctionChain.append(sendEmail.s())
+        #scrapingFunctionChain.append(sendEmail.s())
 
 
         chainInstance = chain(*scrapingFunctionChain)

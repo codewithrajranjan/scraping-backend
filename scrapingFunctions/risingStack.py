@@ -4,24 +4,24 @@ import re
 import logging
 from celery import Task
 
-class GeeksForGeeksHomePage(Task):
+class RisingStack(Task):
 
-    identifier = "geeks-for-geeks-home"
+    identifier = "rising-stack"
 
     def __init__(self):
-        self.url = "https://www.geeksforgeeks.org/"
+        self.url = "https://blog.risingstack.com"
         self.posts = []
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
         soup = BeautifulSoup(response.content,'html.parser')
-        data = soup.select("article header h2")
+        data = soup.select("article.post")
         
         for eachData in data:
             try :
                 data = {
-                         "label" : eachData.a.string,
-                         "link" : eachData.a.attrs['href'],
+                         "label" : eachData.header.h1.a.string,
+                         "link" : "{}{}".format(self.url,eachData.header.h1.a.attrs['href']),
                          "identifier" : self.identifier
                  }
                 self.posts.append(data)
@@ -38,9 +38,3 @@ class GeeksForGeeksHomePage(Task):
 
 
 
-if __name__ == '__main__' :
-
-
-
-    obj = GeeksForGeeksHomePage()
-    obj.scrape()

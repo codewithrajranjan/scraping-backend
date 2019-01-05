@@ -2,10 +2,15 @@ from flask_restful import Resource
 from database import DatabaseManager
 from core import Post
 from flask import request
-from webargs import fields, validate
+from webargs import fields
 from webargs.flaskparser import parser
+from utils import DateManager
+from scrapingFunctions import SCRAPING_FUNCTIONS
 
+filterForIdentifier = []
 
+for eachScrapingFunction in SCRAPING_FUNCTIONS : 
+    filterForIdentifier.append({'identifier': eachScrapingFunction.identifier})
 
 
 
@@ -22,6 +27,7 @@ class Blogs(Resource):
 
         argsRecieved = parser.parse(inputArgs,request)
 
+        #$and: [{$or : [{'a':1},{'b':2}]},{$or : [{'a':2},{'b':3}]}]
 
         # checking if status value is new then showing visited also
         status = argsRecieved['status']
@@ -29,14 +35,17 @@ class Blogs(Resource):
         whereClause = {}
 
         if status == "new":
-            whereClause["$or"] = [{'status': 'new'},{'status':'visited'}]
+            whereClause["$and"] = [{"$or": [{'status': 'new'},{'status':'visited'}]},{"$or": filterForIdentifier }]
         else : 
             whereClause['status'] = argsRecieved['status']
 
         if argsRecieved['tag'] != None :
             whereClause['identifier'] = argsRecieved['tag']
-
+         
         result = DatabaseManager.find(Post,whereClause,responseFormat="json")
+
+        for eachBlog in result : 
+            eachBlog['createdAt'] = DateManager.getHumanRedableDateDiff(DateManager.getTodaysDate(),eachBlog['createdAt'])
 
         return result,200
 
@@ -44,7 +53,7 @@ class Blogs(Resource):
 
     def options(self):
         return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
-                {'Access-Control-Allow-Origin': '*',
+                {       'Access-Control-Allow-Origin': '*',
                         'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
                         'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
 

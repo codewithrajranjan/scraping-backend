@@ -4,12 +4,13 @@ import re
 import logging
 from celery import Task
 
-class BlogTest(Task):
 
-    identifier = "hackerearth-notes"
+class CareerCup(Task):
+
+    identifier = "careerCup"
 
     def __init__(self):
-        self.url = "https://www.hackerearth.com/practice/notes/newest/"
+        self.url = "https://www.careercup.com/page"
         self.posts = []
 
     def scrape(self):
@@ -17,28 +18,28 @@ class BlogTest(Task):
         try :
                 response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
                 soup = BeautifulSoup(response.content,'html.parser')
-                print(soup)
-                data = soup.select(".notes-container")
-                print(data) 
+                data = soup.select("#question_preview li.question")
+                
                 for eachData in data:
 
                         try : 
 
                             data = {
-                                     "label" : eachData,
-                                     #"link" : "{}{}".format("https://www.careercup.com",eachData.find('span',class_='entry').a.attrs['href']),
-                                    "identifier" : self.identifier,
+                                     "label" : "{}".format(eachData.find('span',class_='entry').a.p),
+                                     "link" : "{}{}".format("https://www.careercup.com",eachData.find('span',class_='entry').a.attrs['href']),
+                                    "identifier" : self.identifier
                              }
                             self.posts.append(data)
 
                         except Exception as e :
                             logging.error("{} === Error occured in processing  {}".format(self.identifier,e))
                             continue
-                print(self.posts);
+                #print(self.posts)
                 return self.posts
 
         except Exception as e:
                 logging.error(e)
+
 
     def run(self,context):
         scrapedPost = self.scrape()
@@ -47,10 +48,3 @@ class BlogTest(Task):
 
 
 
-if __name__ == '__main__' :
-
-
-
-    obj = BlogTest()
-    result = obj.scrape()
-    print(result)

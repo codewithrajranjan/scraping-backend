@@ -1,6 +1,7 @@
 from .MongoDatabase import MongoDatabase
 from .MysqlDatabase import MysqlDatabase
 import pymysql.cursors
+from utils import raiseException
 from config import DATABASE_LIST
 connectionPool = {}
 
@@ -124,7 +125,7 @@ class DatabaseManager(object):
         return data
 
     @classmethod
-    def find(cls,entityClass,whereClause,factoryClass=None,responseFormat="object"):
+    def find(cls,entityClass,whereClause,factoryClass=None,textMatching=False,responseFormat="object"):
         """
         Find entity from database
 
@@ -149,7 +150,7 @@ class DatabaseManager(object):
 
         """
         dbConnection = cls.__getDatabaseConnection(entityClass)
-        mongoCursor = dbConnection.find(entityClass,whereClause)
+        mongoCursor = dbConnection.find(entityClass,whereClause,textMatching=textMatching)
         
         # now we need to take decision if we want to return data a full json or actual object instances
         responseArray = []

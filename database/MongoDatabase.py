@@ -52,10 +52,11 @@ class MongoDatabase():
         entityInstance.updatedAt = updateTime
 
 
-    def find(self,entityClass,whereClause,databaseSession=None):
+    def find(self,entityClass,whereClause,textMatching=False,databaseSession=None):
         collectionName = entityClass.collectionName
         mongoCursor = self.client[collectionName].find(whereClause).sort([('createdAt', pymongo.DESCENDING)])
         data = []
+
         for eachData in mongoCursor:
             jsonString = dumps(eachData) 
             convert = json.loads(jsonString)
