@@ -96,6 +96,21 @@ class DatabaseManager(object):
         dbConnection = cls.__getDatabaseConnection(entityInstance)
         dbConnection.create(entityInstance,databaseSession=databaseSession)
 
+    @classmethod
+    def delete(cls,entityClass,whereClause={},databaseSession=None):
+        """
+        Create the entity instance in database
+
+        Attributes
+        --------------------------------
+        entityInstance : Object
+            The instance to entity which will be inserted into databse
+
+        """
+        dbConnection = cls.__getDatabaseConnection(entityClass)
+        dbConnection.delete(entityClass,whereClause,databaseSession=databaseSession)
+
+
     
     @classmethod
     def update(cls,entityInstance):

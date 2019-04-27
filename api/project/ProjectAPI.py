@@ -16,7 +16,9 @@ class ProjectAPI(Resource):
                         {'key': 'Sorting','value':'sorting'},
                         {'key': 'Math','value':'math'},
                         {'key': 'Stack','value':'stack'},
-                        {'key': 'System Design','value':'system-design'}
+                        {'key': 'System Design','value':'system-design'},
+                        {'key': 'Bit Programming','value':'bit'},
+                        {'key': 'Binary Tree','value':'binary-tree'}
 
                     ]
             }

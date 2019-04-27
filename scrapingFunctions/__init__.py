@@ -11,23 +11,24 @@ from .risingStack import RisingStack
 from .ditributedPython import DistributedPython
 from .datastructureAlgorithm.mediumDSALGOLatest import MediumDSALGOLatest
 from .datastructureAlgorithm.careerCup import CareerCup
+import logging
 
 
 
 
 SCRAPING_FUNCTIONS = [
-       # FreeCodeCamp,
-       # #TechAdmin,
-       # FreeCodeCampPythonLatest,
-       # FreeCodeCampNodeJSLatest,
-       # GitHubTrendingToday,
-       # DigitalOceanCommunity,
-       # MongoDBBlog,
+        FreeCodeCamp,
+        #TechAdmin,
+        FreeCodeCampPythonLatest,
+        FreeCodeCampNodeJSLatest,
+        GitHubTrendingToday,
+        DigitalOceanCommunity,
+        MongoDBBlog,
         GeeksForGeeksHomePage,
         MediumDSALGOLatest,
-        CareerCup
-       # RisingStack,
-       # DistributedPython
+        #CareerCup,
+        RisingStack,
+        DistributedPython
 ]
 
 
@@ -38,7 +39,9 @@ def registerTask(celeryAppInstance):
 
     for eachFunction in SCRAPING_FUNCTIONS:
        registeredTaskDict[eachFunction.identifier] = celeryAppInstance.register_task(eachFunction())
-
+       logging.debug(registeredTaskDict)
+    
+    
     return registeredTaskDict
 
 

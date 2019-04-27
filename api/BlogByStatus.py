@@ -11,6 +11,7 @@ import traceback
 
 
 
+
 class BlogByStatus(Resource):
 
 
@@ -49,11 +50,11 @@ class BlogByStatus(Resource):
 
 
 
-    def options(self):
-        return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
-               {'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
-             'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
+#    def options(self):
+#        return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
+#               {'Access-Control-Allow-Origin': '*',
+#            'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
+#             'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
 
 
 

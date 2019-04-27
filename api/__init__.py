@@ -5,7 +5,8 @@ from .ScrapingResourceByIdentifier import ScrapingResourceByIdentifier
 from .BlogByStatus import BlogByStatus
 from .Blogs import Blogs
 from .BlogTagsAPI import BlogTagsAPI
-from .question import QuestionAPI
+from .question.QuestionAPI import QuestionAPI
+from .question.QuestionByIdAPI import QuestionByIdAPI
 from .project import ProjectAPI
 
 restServer = Api(flaskAppInstance)
@@ -24,6 +25,7 @@ restServer.add_resource(BlogTagsAPI,"/api/v1.0/tag")
 # Question related apis
 ##########################################################
 restServer.add_resource(QuestionAPI,"/api/v1.0/question")
+restServer.add_resource(QuestionByIdAPI,"/api/v1.0/question/id/<string:questionId>")
 
 
 

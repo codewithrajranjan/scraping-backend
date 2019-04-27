@@ -1,6 +1,13 @@
 from celery import Celery
+import os
+import logging
 
-celeryApp = Celery('tasks', broker='pyamqp://admin:password@localhost//')
+RABBITMQ_SERVER_STRING=os.environ["RABBITMQ_SERVER_STRING"]
+logging.debug("@@@@@@@@@@@@@@@@@@@@@@@")
+logging.debug(RABBITMQ_SERVER_STRING)
+
+
+celeryApp = Celery('tasks', broker=RABBITMQ_SERVER_STRING)
 
 from scrapingFunctions import registerTask
 from database import DatabaseManager

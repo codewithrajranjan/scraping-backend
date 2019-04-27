@@ -29,3 +29,7 @@ class Post():
                 "status" : self.status,
                 "createdAt" : self.createdAt
         }
+
+    def findByIdentifier(self,identifier):
+        pass
+

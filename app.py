@@ -1,9 +1,7 @@
-import logging, os, sys
-from flask import Flask, jsonify, request
+import logging
+from flask import Flask
 from flask_cors import CORS
-from celery import Celery
 from flask_mongoengine import MongoEngine
-from uuid import uuid4
 LOGLEVEL = "DEBUG"
 from webargs.flaskparser import parser
 
@@ -28,8 +26,10 @@ time.tzset()
 # creating flask app instance
 flaskAppInstance = Flask(__name__)
 
-cors = CORS(flaskAppInstance, resources={r"/api/*": {"origins": "*"}})
+#cors = CORS(flaskAppInstance, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(flaskAppInstance)
 
+#logging.getLogger('flask_cors').level = logging.DEBUG
 flaskAppInstance.config['SECRET_KEY'] = 'top-secret!'
 
 db = None

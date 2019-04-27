@@ -10,7 +10,7 @@ from scrapingFunctions import SCRAPING_FUNCTIONS
 
 
 
-class BlogTagsAPI(Resource):
+class Identifier(Resource):
 
     def get(self):
 
@@ -33,20 +33,6 @@ class BlogTagsAPI(Resource):
 #                        'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
 #                        'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
 #
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

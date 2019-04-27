@@ -3,10 +3,11 @@ from pymongo import MongoClient
 import pymongo
 from config import DATE_FORMAT
 from datetime import datetime
-from bson.json_util import dumps, loads
-from bson import json_util
+from bson.json_util import dumps
 import  simplejson as json
 from bson import ObjectId
+import os
+
 
 
 class MongoDatabase():
@@ -18,7 +19,8 @@ class MongoDatabase():
         print("# Creating Mongo Database Connection")
 
         try:
-            self.client = MongoClient("mongodb://selftuts_developer:justdoit956@ds141972.mlab.com:41972/scraping")
+            databaseConnectionString = os.environ["DATABASE_CONNECTION_STRING"]
+            self.client = MongoClient(databaseConnectionString)
             self.client = self.client['scraping']
         except Exception as e:
             print(e)
@@ -41,25 +43,41 @@ class MongoDatabase():
         # check if entity has collection name
         collectionName = entityInstance.collectionName
         modelData = entityInstance.getModelData()
+        id = entityInstance.getId()
         updateTime = datetime.now().strftime(DATE_FORMAT)
         modelData['updatedAt'] = updateTime
         self.client[collectionName].update_one(
-                {'_id': ObjectId(entityInstance._id["$oid"])},
+                {'_id': ObjectId(id)},
                 {"$set": modelData}
         )
 
         ## if insert into data base is successfull then add mongodb id in the entity instance
         entityInstance.updatedAt = updateTime
 
+    def delete(self,entityClass,whereClause={},databaseSession=None):
+        # check if entity has collection name
+        collectionName = entityClass.collectionName
+        self.client[collectionName].delete_one({'_id': ObjectId(whereClause['id'])})
+
+
+
 
     def find(self,entityClass,whereClause,textMatching=False,databaseSession=None):
         collectionName = entityClass.collectionName
+        if 'id' in whereClause:
+            temp = whereClause.get('id')
+            del whereClause['id']
+            whereClause['_id']= ObjectId(temp)
         mongoCursor = self.client[collectionName].find(whereClause).sort([('createdAt', pymongo.DESCENDING)])
         data = []
 
         for eachData in mongoCursor:
             jsonString = dumps(eachData) 
             convert = json.loads(jsonString)
+            if '_id' in convert:
+                temp = convert.get('_id').get('$oid')
+                convert['id'] = temp
+
             data.append(convert)
 
         return data
