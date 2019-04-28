@@ -1,4 +1,3 @@
-import logging
 from utils import raiseException
 
 class Post():

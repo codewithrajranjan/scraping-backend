@@ -20,14 +20,13 @@ class Blogs(Resource):
         inputArgs = {
                 'status': fields.Str(missing='new',location='querystring'),
                 'tag': fields.Str(missing=None,location='querystring'),
-
+                'identifier': fields.Str(missing=None,location='querystring'),
         }
 
         
 
         argsRecieved = parser.parse(inputArgs,request)
 
-        #$and: [{$or : [{'a':1},{'b':2}]},{$or : [{'a':2},{'b':3}]}]
 
         # checking if status value is new then showing visited also
         status = argsRecieved['status']
@@ -41,6 +40,9 @@ class Blogs(Resource):
 
         if argsRecieved['tag'] != None :
             whereClause['identifier'] = argsRecieved['tag']
+
+        if argsRecieved['identifier'] != None :
+            whereClause['identifier'] = argsRecieved['identifier']
          
         result = DatabaseManager.find(Post,whereClause,responseFormat="json")
 

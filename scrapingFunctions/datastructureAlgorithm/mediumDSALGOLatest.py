@@ -1,6 +1,5 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
-import re
 import logging
 from celery import Task
 
@@ -32,6 +31,7 @@ class MediumDSALGOLatest(Task):
                             self.posts.append(data)
 
                         except Exception as e :
+                            print(e)
                             logging.error("Error occured in processing  {}".format(self.identifier))
                             continue
 

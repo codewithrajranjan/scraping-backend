@@ -1,6 +1,5 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
-import re
 import logging
 from celery import Task
 

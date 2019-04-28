@@ -16,20 +16,21 @@ class ScrapingEngine:
     
     def scrape(self,identifier=None):
 
-       # if identifier !=None:
-
-       #     # pushing task to rabbitmq
-       #     registeredTaskDict[identifier].delay()
-       #     return self
-        
         scrapingFunctionChain = []
         # adding initial context
         context = {
             "posts" : []
         }
         for eachTask in registeredTaskDict:
-            scrapingFunctionChain.append(registeredTaskDict[eachTask].s()) 
-
+            if identifier != None  : 
+                if eachTask == identifier:
+                    scrapingFunctionChain.append(registeredTaskDict[eachTask].s()) 
+            else :
+                scrapingFunctionChain.append(registeredTaskDict[eachTask].s()) 
+        
+        if len(scrapingFunctionChain) == 0 :
+            raise Exception("No registerTask found with identifier = {}".format(identifier))
+        
         
         scrapingFunctionChain.append(filterUniquePost.s())
         #scrapingFunctionChain.append(sendEmail.s())

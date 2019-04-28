@@ -184,6 +184,20 @@ class DatabaseManager(object):
         return responseArray
 
     @classmethod
+    def aggregate(cls,entityClass,whereClause,factoryClass=None,textMatching=False):
+
+        dbConnection = cls.__getDatabaseConnection(entityClass)
+        mongoCursor = dbConnection.aggregate(entityClass,whereClause,textMatching=textMatching)
+        
+        # now we need to take decision if we want to return data a full json or actual object instances
+        responseArray = []
+
+        for eachRecord in mongoCursor: 
+                responseArray.append(eachRecord)
+        
+        return responseArray
+
+    @classmethod
     def createMySQLConnectionDict(cls,mysqlDatabaseConfiguration):
         connectionDict =  {}
         

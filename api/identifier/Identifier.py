@@ -1,10 +1,6 @@
 from flask_restful import Resource
-from database import DatabaseManager
-from core import Post
-from flask import request
-from webargs import fields, validate
-from webargs.flaskparser import parser
 from scrapingFunctions import SCRAPING_FUNCTIONS
+from core.post import PostUtils
 
 
 
@@ -14,30 +10,41 @@ class Identifier(Resource):
 
     def get(self):
 
-        tagsList = [] 
+        identifierList = [] 
 
         for eachScrpingFunction in SCRAPING_FUNCTIONS : 
-            tagsList.append({
+            identifierList.append({
                                 'key': eachScrpingFunction.identifier,
                                 'value' : eachScrpingFunction.identifier
                             })
 
 
-        return tagsList,200
+        # getting the stats of posts based on status
+        result = PostUtils.getStatsBasedOnStatus()
+        
+        # now normalizing the data
+        for eachData in identifierList:
+            eachData["new"] = 0
+            eachData["visited"] = 0
+            eachData["total"] = 0
+            for eachRecord in result:
+                # here the identifier data is container in the _id of aggregated result 
+                # and in the value of identifierList
+                if eachRecord['_id'] == eachData['value'] : 
+                    eachData['new'] = eachRecord['new']
+                    eachData['visited'] = eachRecord['visited']
+                    eachData['total'] = eachRecord['total']
 
+        
+        # once normalization has been done we need to sort the list based on the value of new post count
+        print(identifierList)
+        identifierList.sort(key=lambda x: x["new"], reverse=True)
 
+        response = {
 
-#    def options(self):
-#        return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
-#                    {   'Access-Control-Allow-Origin': '*',
-#                        'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
-#                        'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
-#
+                "code" : "identifierFound",
+                "data" : identifierList,
+                "message" : "Blog Identifier found successfully"
+        }
 
-
-
-
-
-
-
-
+        return response,200

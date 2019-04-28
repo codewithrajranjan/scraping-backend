@@ -11,6 +11,7 @@ from .risingStack import RisingStack
 from .ditributedPython import DistributedPython
 from .datastructureAlgorithm.mediumDSALGOLatest import MediumDSALGOLatest
 from .datastructureAlgorithm.careerCup import CareerCup
+from .videoTutorials.VideoTutorials1337x import VideoTutorial1337x
 import logging
 
 
@@ -18,7 +19,7 @@ import logging
 
 SCRAPING_FUNCTIONS = [
         FreeCodeCamp,
-        #TechAdmin,
+        TechAdmin,
         FreeCodeCampPythonLatest,
         FreeCodeCampNodeJSLatest,
         GitHubTrendingToday,
@@ -28,7 +29,8 @@ SCRAPING_FUNCTIONS = [
         MediumDSALGOLatest,
         #CareerCup,
         RisingStack,
-        DistributedPython
+        DistributedPython,
+        VideoTutorial1337x
 ]
 
 

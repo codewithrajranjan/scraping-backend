@@ -1,13 +1,14 @@
 from flask_restful import Api
 from app import flaskAppInstance
-from .ScrapingResource import ScrapingResource
-from .ScrapingResourceByIdentifier import ScrapingResourceByIdentifier
+from .scraping import ScrapingResource
+from .scraping import ScrapingResourceByIdentifier
 from .BlogByStatus import BlogByStatus
 from .Blogs import Blogs
 from .BlogTagsAPI import BlogTagsAPI
 from .question.QuestionAPI import QuestionAPI
 from .question.QuestionByIdAPI import QuestionByIdAPI
 from .project import ProjectAPI
+from .identifier import Identifier
 
 restServer = Api(flaskAppInstance)
 
@@ -33,3 +34,16 @@ restServer.add_resource(QuestionByIdAPI,"/api/v1.0/question/id/<string:questionI
 # Project related apis
 ###########################################################
 restServer.add_resource(ProjectAPI,"/api/v1.0/project")
+
+
+############################################################
+# post identifier related api
+############################################################
+restServer.add_resource(Identifier,"/api/v1.0/identifier")
+
+
+
+
+
+
+

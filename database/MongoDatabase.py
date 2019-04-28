@@ -81,6 +81,26 @@ class MongoDatabase():
             data.append(convert)
 
         return data
+
+    def aggregate(self,entityClass,whereClause,textMatching=False,databaseSession=None):
+        collectionName = entityClass.collectionName
+        if 'id' in whereClause:
+            temp = whereClause.get('id')
+            del whereClause['id']
+            whereClause['_id']= ObjectId(temp)
+        mongoCursor = self.client[collectionName].aggregate(whereClause)
+        data = []
+
+        for eachData in mongoCursor:
+            jsonString = dumps(eachData) 
+            convert = json.loads(jsonString)
+            #if '_id' in convert:
+            #    temp = convert.get('_id').get('$oid')
+            #    convert['id'] = temp
+
+            data.append(convert)
+
+        return data
         
             
 
