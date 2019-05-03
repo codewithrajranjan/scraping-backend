@@ -11,6 +11,7 @@ class CareerCup(Task):
     def __init__(self):
         self.url = "https://www.careercup.com/page"
         self.posts = []
+        self.tags = ['competitive','data structure','algorithm']
 
     def scrape(self):
 
@@ -26,7 +27,9 @@ class CareerCup(Task):
                             data = {
                                      "label" : "{}".format(eachData.find('span',class_='entry').a.p),
                                      "link" : "{}{}".format("https://www.careercup.com",eachData.find('span',class_='entry').a.attrs['href']),
-                                    "identifier" : self.identifier
+                                    "identifier" : self.identifier,
+                                    "tags" : self.tags
+
                              }
                             self.posts.append(data)
 

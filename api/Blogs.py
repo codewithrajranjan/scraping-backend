@@ -21,6 +21,7 @@ class Blogs(Resource):
                 'status': fields.Str(missing='new',location='querystring'),
                 'tag': fields.Str(missing=None,location='querystring'),
                 'identifier': fields.Str(missing=None,location='querystring'),
+                'searchtext' : fields.Str(missing=None,location='querystring')
         }
 
         
@@ -34,17 +35,27 @@ class Blogs(Resource):
         whereClause = {}
 
         if status == "new":
-            whereClause["$and"] = [{"$or": [{'status': 'new'},{'status':'visited'}]},{"$or": filterForIdentifier }]
+            #whereClause["$and"] = [{"$or": [{'status': 'new'},{'status':'visited'}]},{"$or": filterForIdentifier }]
+            pass
         else : 
             whereClause['status'] = argsRecieved['status']
 
         if argsRecieved['tag'] != None :
-            whereClause['identifier'] = argsRecieved['tag']
+            whereClause['tags'] = argsRecieved['tag']
 
         if argsRecieved['identifier'] != None :
             whereClause['identifier'] = argsRecieved['identifier']
-         
+
+        if argsRecieved['searchtext'] != None :
+            #whereClause['label'] = {"$regex": argsRecieved['searchtext'],"$options":"$i"}
+            whereClause['$or'] =[
+                                    {'label' :   {"$regex": argsRecieved['searchtext'],"$options":"$i"}},
+                                    {'tags' :   {"$regex": argsRecieved['searchtext'],"$options":"$i"}}
+
+                                ]
+        
         result = DatabaseManager.find(Post,whereClause,responseFormat="json")
+
 
         for eachBlog in result : 
             eachBlog['createdAt'] = DateManager.getHumanRedableDateDiff(DateManager.getTodaysDate(),eachBlog['createdAt'])

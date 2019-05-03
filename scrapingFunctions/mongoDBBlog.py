@@ -1,6 +1,5 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
-import re
 import logging
 from celery import Task
 
@@ -11,6 +10,7 @@ class MongoDBBlog(Task):
     def __init__(self):
         self.url = "https://www.mongodb.com/blog"
         self.posts = []
+        self.tags = ['mongodb']
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -22,7 +22,8 @@ class MongoDBBlog(Task):
                 data = {
                          "label" : eachData.a.h3.string,
                          "link" : "https://www.mongodb.com{}".format(eachData.a.attrs['href']),
-                         "identifier" : self.identifier
+                         "identifier" : self.identifier,
+                         "tags" : self.tags
                  }
                 self.posts.append(data)
             except Exception as e:

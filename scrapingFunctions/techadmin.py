@@ -9,6 +9,7 @@ class TechAdmin(Task):
     def __init__(self):
         self.url = "https://tecadmin.net/"
         self.posts = []
+        self.tags = ['linux']
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -18,7 +19,8 @@ class TechAdmin(Task):
              data = {
                      "label" : eachData.a.string,
                      "link" : eachData.a.attrs['href'],
-                     "identifier" : self.identifier
+                     "identifier" : self.identifier,
+                     "tags" : self.tags
              }
              self.posts.append(data)
 
@@ -29,6 +31,7 @@ class TechAdmin(Task):
 
 
     def run(self,context):
+        print(context)
         scrapedPost = self.scrape()
         context['posts'].extend(scrapedPost)
         return context

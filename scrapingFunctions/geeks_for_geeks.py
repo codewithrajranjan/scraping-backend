@@ -1,6 +1,5 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
-import re
 import logging
 from celery import Task
 
@@ -11,6 +10,7 @@ class GeeksForGeeksHomePage(Task):
     def __init__(self):
         self.url = "https://www.geeksforgeeks.org/"
         self.posts = []
+        self.tags = ['geeks for geeks','data structure','algorithm']
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})

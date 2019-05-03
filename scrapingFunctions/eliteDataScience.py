@@ -9,6 +9,7 @@ class EliteDataScience(Task):
         self.url = "https://elitedatascience.com/",
         self.identifier = "eliteDataScience"
         self.posts = []
+        self.tags = ['python','machine learning']
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -19,7 +20,8 @@ class EliteDataScience(Task):
                  data = {
                          "label" : eachData.a.string,
                          "link" : eachData.attrs['href'],
-                         "identifier" : self.identifier
+                         "identifier" : self.identifier,
+                         "tags" : self.tags
                  }
                  self.posts.append(data)
             except Exception as e:

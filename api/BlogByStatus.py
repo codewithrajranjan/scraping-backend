@@ -31,7 +31,7 @@ class BlogByStatus(Resource):
                 return formattedResponse,formattedResponse['statusCode']
 
             postInstance = data[0]
-
+            
             postInstance.status = blogStatus
             
             result = DatabaseManager.update(postInstance)
@@ -43,18 +43,18 @@ class BlogByStatus(Resource):
         except Exception as e:
 
             logging.error(traceback.format_exc())
-            formattedResponse = ResponseHandler.formatResponse('POST_UPDATE_FAILED)',exception=e)
+            formattedResponse = ResponseHandler.formatResponse('POST_UPDATE_FAILED',exception=e)
             return formattedResponse,formattedResponse['statusCode']
 
         
 
 
 
-#    def options(self):
-#        return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
-#               {'Access-Control-Allow-Origin': '*',
-#            'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
-#             'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
+    def options(self):
+        return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
+               {'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
+             'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
 
 
 

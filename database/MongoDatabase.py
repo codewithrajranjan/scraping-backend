@@ -44,6 +44,8 @@ class MongoDatabase():
         collectionName = entityInstance.collectionName
         modelData = entityInstance.getModelData()
         id = entityInstance.getId()
+        print("@@@@@@@@@@@@")
+        print(id)
         updateTime = datetime.now().strftime(DATE_FORMAT)
         modelData['updatedAt'] = updateTime
         self.client[collectionName].update_one(
@@ -76,6 +78,7 @@ class MongoDatabase():
             convert = json.loads(jsonString)
             if '_id' in convert:
                 temp = convert.get('_id').get('$oid')
+                convert['_id'] = temp
                 convert['id'] = temp
 
             data.append(convert)

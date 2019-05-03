@@ -1,7 +1,6 @@
 import logging
 from config import DATE_FORMAT
 from datetime import datetime
-from utils import raiseException
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text

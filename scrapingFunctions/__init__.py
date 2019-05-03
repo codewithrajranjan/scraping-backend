@@ -1,17 +1,18 @@
 from .freecodecamp import FreeCodeCamp
 from .eliteDataScience import EliteDataScience
 from .techadmin import TechAdmin
-from .freecodecamp_python_latest import FreeCodeCampPythonLatest
-from .freecodecamp_nodejs_latest import FreeCodeCampNodeJSLatest
 from .github_trending_today import GitHubTrendingToday
 from .digital_ocean_community import DigitalOceanCommunity
 from .geeks_for_geeks import GeeksForGeeksHomePage
 from .mongoDBBlog import MongoDBBlog
 from .risingStack import RisingStack
 from .ditributedPython import DistributedPython
-from .datastructureAlgorithm.mediumDSALGOLatest import MediumDSALGOLatest
 from .datastructureAlgorithm.careerCup import CareerCup
 from .videoTutorials.VideoTutorials1337x import VideoTutorial1337x
+from .docker.dockerBlog import DockerBlog
+from .linuxDistros.centos import CentosBlog
+from .linuxDistros.ubuntuBlog import UbuntuBlog
+from .medium.MediumTagBased import MediumTagBased
 import logging
 
 
@@ -20,17 +21,18 @@ import logging
 SCRAPING_FUNCTIONS = [
         FreeCodeCamp,
         TechAdmin,
-        FreeCodeCampPythonLatest,
-        FreeCodeCampNodeJSLatest,
         GitHubTrendingToday,
         DigitalOceanCommunity,
         MongoDBBlog,
         GeeksForGeeksHomePage,
-        MediumDSALGOLatest,
         #CareerCup,
         RisingStack,
         DistributedPython,
-        VideoTutorial1337x
+        VideoTutorial1337x,
+        DockerBlog,
+        CentosBlog,
+        UbuntuBlog,
+        MediumTagBased
 ]
 
 

@@ -7,6 +7,7 @@ class VideoTutorial1337x(Task):
     identifier = "video-tutorial-1337x"
 
     def __init__(self):
+        self.baseUrl = "https://www.1377x.to"
         self.url = "https://www.1377x.to/user/{}/"
         self.users = ['CourseClub','Fclab','SunRiseZone','fcs0310','freecoursewb']
         self.posts = []
@@ -21,13 +22,9 @@ class VideoTutorial1337x(Task):
             data = soup.select("td.name")
             for eachData in data:
                 element = eachData.find_all('a')[1]
-                
-                link = element.attrs['href']
-                # removing first slash from the link
-                link = link[1:]
                 data = {
                      "label" : element.string,
-                     "link" : "{}{}".format(url,link),
+                     "link" : "{}{}".format(self.baseUrl,element.attrs['href']),
                      "identifier" : self.identifier
                 }
                 self.posts.append(data)

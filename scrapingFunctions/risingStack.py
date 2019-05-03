@@ -1,6 +1,5 @@
 from utils import RequestService
 from bs4 import BeautifulSoup
-import re
 import logging
 from celery import Task
 
@@ -11,6 +10,8 @@ class RisingStack(Task):
     def __init__(self):
         self.url = "https://blog.risingstack.com"
         self.posts = []
+        self.tags = ['nodejs']
+        
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -22,7 +23,8 @@ class RisingStack(Task):
                 data = {
                          "label" : eachData.header.h1.a.string,
                          "link" : "{}{}".format(self.url,eachData.header.h1.a.attrs['href']),
-                         "identifier" : self.identifier
+                         "identifier" : self.identifier,
+                         "tags" : self.tags
                  }
                 self.posts.append(data)
             except Exception as e:

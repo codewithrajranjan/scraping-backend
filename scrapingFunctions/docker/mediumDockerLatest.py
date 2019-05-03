@@ -3,13 +3,14 @@ from bs4 import BeautifulSoup
 import logging
 from celery import Task
 
-class FreeCodeCampNodeJSLatest(Task):
+class MediumDockerLatest(Task):
 
-    identifier = "freecodecamp-nodejs-latest"
+    identifier = "medium-docker-latest"
 
     def __init__(self):
-        self.url = "https://medium.com/tag/nodejs/latest/"
+        self.url = "https://medium.com/tag/docker/latest/"
         self.posts = []
+        self.tags = ['docker']
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -22,11 +23,11 @@ class FreeCodeCampNodeJSLatest(Task):
                              "label" : eachData.find('div',class_='section-content').h3.string,
                              "link" : eachData.find('div',class_='postArticle-content').parent.attrs['href'],
                              "identifier" : self.identifier,
-                             "tags" : ["nodejs"]
+                             "tags" : self.tags
                      }
                     self.posts.append(data)
             except Exception as e:
-                #logging.error("Error while parsing data",str(e))
+                logging.error("Error while parsing data",str(e))
                 logging.error("Error while parsing data")
                 continue
 

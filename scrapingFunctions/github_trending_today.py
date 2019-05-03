@@ -13,6 +13,7 @@ class GitHubTrendingToday(Task):
     def __init__(self):
         self.url = "https://github.com/trending/"
         self.posts = []
+        self.tags = ['github']
 
     def scrape(self):
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -27,7 +28,8 @@ class GitHubTrendingToday(Task):
                 data = {
                          "label" : newLabel,
                          "link" : "https://github.com{}".format(eachData.h3.a.attrs['href']),
-                         "identifier" : self.identifier
+                         "identifier" : self.identifier,
+                         "tags" : self.tags
                  }
                 self.posts.append(data)
             except Exception as e:

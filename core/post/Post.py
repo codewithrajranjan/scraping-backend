@@ -14,8 +14,10 @@ class Post():
         self.link = kwargs.get('link') or raiseException("link not found in kwargs")
         self.status = kwargs.get('status')
         self.createdAt = kwargs.get('createdAt')
+        self.tags = kwargs.get('tags') or []
 
-
+    def getId(self):
+        return self._id
 
     def getModelData(self):
 
@@ -26,9 +28,6 @@ class Post():
                 "identifier" : self.identifier,
                 "link" : self.link,
                 "status" : self.status,
-                "createdAt" : self.createdAt
+                "createdAt" : self.createdAt,
+                "tags" : self.tags
         }
-
-    def findByIdentifier(self,identifier):
-        pass
-

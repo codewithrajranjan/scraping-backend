@@ -2,27 +2,28 @@ from utils import RequestService
 from bs4 import BeautifulSoup
 from celery import Task
 
-class FreeCodeCamp(Task):
+class CentosBlog(Task):
 
-    identifier = "freecodecamp"
+    identifier = "centos-blog"
 
     def __init__(self):
-        self.url = "https://medium.freecodecamp.org/"
+        self.url = "https://blog.centos.org/"
         self.posts = []
-        self.tags = []
+        self.tags = ["linux","centos"]
 
     def scrape(self):
+        # creating url for each user
         response = RequestService.get(self.url,headers={'User-Agent': 'Mozilla/5.0'})
         soup = BeautifulSoup(response.content,'html.parser')
-        data = soup.select(".postArticle > div > a")
+        data = soup.select(".loophead h2 a")
         for eachData in data:
-             data = {
-                     "label" : eachData.h3.string,
-                     "link" : eachData.attrs['href'],
-                     "identifier" : self.identifier,
-                     "tags" : self.tags
-             }
-             self.posts.append(data)
+            data = {
+                "label" : eachData.string,
+                "link" : eachData.attrs['href'],
+                "identifier" : self.identifier,
+                "tags" : self.tags
+            }
+            self.posts.append(data)
 
         return self.posts
 
