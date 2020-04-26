@@ -1,2 +1,0 @@
-from .ScrapingResource import ScrapingResource
-from .ScrapingResourceByIdentifier import ScrapingResourceByIdentifier
