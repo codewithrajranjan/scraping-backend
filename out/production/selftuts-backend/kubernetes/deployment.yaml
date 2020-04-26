@@ -1,0 +1,26 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: scraping-backend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: scraping-backend
+  replicas:  # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: scraping-backend
+    spec:
+      containers:
+        - name: scraping-backend3
+          image: scraping-backend:3-management
+          env:
+            - name: scraping-backend_DEFAULT_USER
+              value: user
+            - name: scraping-backend_DEFAULT_PASS
+              value: password
+          ports:
+            - name: amqp
+              protocol: TCP
+              containerPort: 5672

@@ -21,13 +21,14 @@ class MediumTagBased(Task):
         ]
 
     def scrape(self):
+
         # for each tag we need to call medium website
         for eachTagData in self.tagData:
-            tag_to_search = eachTagData['tagName']
-            post_tags = eachTagData['tags']
+            tagToSearch = eachTagData['tagName']
+            postTags = eachTagData['tags']
 
             # making the url to search
-            url = self.url.format(tag_to_search)
+            url = self.url.format(tagToSearch)
 
             response = RequestService.get(url, headers={'User-Agent': 'Mozilla/5.0'})
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -39,7 +40,7 @@ class MediumTagBased(Task):
                         "label": eachData.find('div', class_='section-content').h3.string,
                         "link": eachData.find('div', class_='postArticle-content').parent.attrs['href'],
                         "identifier": self.identifier,
-                        "tags": post_tags
+                        "tags": postTags
                     }
                     self.posts.append(data)
                 except Exception as e:
@@ -50,6 +51,6 @@ class MediumTagBased(Task):
         return self.posts
 
     def run(self, context):
-        scraped_post = self.scrape()
-        context['posts'].extend(scraped_post)
+        scrapedPost = self.scrape()
+        context['posts'].extend(scrapedPost)
         return context

@@ -3,9 +3,9 @@ FROM python:3.4.9-alpine3.8
 
 RUN apk add --no-cache --virtual .pynacl_deps build-base py-pip jpeg-dev libffi-dev zlib-dev openssl-dev jq
 
-WORKDIR /app
-
 COPY requirements.txt /app/requirements.txt
+
+WORKDIR /app
 
 RUN pip3 --no-cache-dir install -r requirements.txt
 
@@ -16,7 +16,6 @@ EXPOSE 9000
 
 ENTRYPOINT ["python"]
 
-#CMD ["--workers=4","--bind=0.0.0.0:8000","wsgi:flaskAppInstance"]
 CMD ["app.py"]
 
 
