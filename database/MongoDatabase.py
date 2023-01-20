@@ -20,7 +20,8 @@ class MongoDatabase():
 
         try:
             #databaseConnectionString = os.environ["DATABASE_CONNECTION_STRING"]
-            databaseConnectionString = "mongodb://selftuts:956956956raj@ds141972.mlab.com:41972/scraping"
+            #databaseConnectionString = "mongodb://selftuts:956956956raj@ds141972.mlab.com:41972/scraping"
+            databaseConnectionString = "mongodb://localhost:27017/scraping"
             self.client = MongoClient(databaseConnectionString)
             self.client = self.client['scraping']
         except Exception as e:
