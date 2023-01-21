@@ -13,10 +13,7 @@ class MediumTagBased(Task):
         self.tags = ['nodejs']
 
         self.tagData = [
-            {"tagName": "nodejs", "tags": ["medium", "nodejs"]},
-            {"tagName": "python", "tags": ["medium", "python"]},
-            {"tagName": "docker compose", "tags": ["medium", "docker compose", "docker"]},
-            {"tagName": "kubernetes", "tags": ["kubernetes"]}
+            {"tagName": "nodejs", "tags": ["medium", "nodejs"]}
 
         ]
 
@@ -28,16 +25,15 @@ class MediumTagBased(Task):
 
             # making the url to search
             url = self.url.format(tag_to_search)
-
             response = RequestService.get(url, headers={'User-Agent': 'Mozilla/5.0'})
             soup = BeautifulSoup(response.content, 'html.parser')
-            data = soup.select(".postArticle.postArticle--short")
+            data = soup.select("[aria-label='Post Preview Title']")
 
             for eachData in data:
                 try:
                     data = {
-                        "label": eachData.find('div', class_='section-content').h3.string,
-                        "link": eachData.find('div', class_='postArticle-content').parent.attrs['href'],
+                        "label": eachData.find('h2').string,
+                        "link": "https://medium.com{}".format(eachData.attrs["href"]),
                         "identifier": self.identifier,
                         "tags": post_tags
                     }
@@ -46,7 +42,6 @@ class MediumTagBased(Task):
                     logging.error("Error while parsing data", str(e))
                     logging.error("Error while parsing data")
                     continue
-
         return self.posts
 
     def run(self, context):
