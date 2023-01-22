@@ -19,19 +19,19 @@ import logging
 
 
 SCRAPING_FUNCTIONS = [
-         FreeCodeCamp,
-         TechAdmin,
-         GitHubTrendingToday,
-         DigitalOceanCommunity,
-         MongoDBBlog,
-         GeeksForGeeksHomePage,
-         CareerCup,
-         RisingStack,
-         DistributedPython,
-         #VideoTutorial1337x,
-         DockerBlog,
-         CentosBlog,
-         UbuntuBlog,
+         # FreeCodeCamp,
+         # TechAdmin,
+         # GitHubTrendingToday,
+         # DigitalOceanCommunity,
+         # MongoDBBlog,
+         # GeeksForGeeksHomePage,
+         # CareerCup,
+         # RisingStack,
+         # DistributedPython,
+         # #VideoTutorial1337x,
+         # DockerBlog,
+         # CentosBlog,
+         # UbuntuBlog,
          MediumTagBased
 ]
 

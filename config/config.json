@@ -1,4 +1,4 @@
-{
+    {
     "log_level": "DEBUG",
     "timezone": "TIME_ZONE",
     "dateFormat": "%Y-%m-%d %H:%M:%S",

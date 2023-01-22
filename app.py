@@ -39,16 +39,13 @@ db = None
 
 
 def bootstrap():
-    """
-    This is used to bootstrap the application and creates an instance of app and db
-    """
     global flaskAppInstance, db
     db = MongoEngine(flaskAppInstance)
     # Returning the instance of app and db
     return flaskAppInstance, db
 
 
-# This code is executed when you run the app directly using python
+# This code is executed when you run the app directly using pythonO
 # This is used only for debugging purpose and not used in production server
 if __name__ == '__main__':
     bootstrap()
