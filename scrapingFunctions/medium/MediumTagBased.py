@@ -14,7 +14,11 @@ class MediumTagBased(Task):
 
         self.tagData = [
             {"tagName": "nodejs", "tags": ["medium", "nodejs"]},
-            {"tagName": "kafka", "tags": ["medium", "kafka"]}
+            {"tagName": "kafka", "tags": ["medium", "kafka"]},
+            {"tagName": "docker", "tags": ["medium", "docker"]},
+            {"tagName": "kubernetes", "tags": ["medium", "kubernetes"]},
+            {"tagName": "python", "tags": ["medium", "python"]},
+
 
         ]
 

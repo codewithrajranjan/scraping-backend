@@ -6,86 +6,51 @@ from webargs import fields
 from webargs.flaskparser import parser
 from utils import DateManager
 from scrapingFunctions import SCRAPING_FUNCTIONS
+from urllib import parse
 
 filterForIdentifier = []
 
-for eachScrapingFunction in SCRAPING_FUNCTIONS : 
+for eachScrapingFunction in SCRAPING_FUNCTIONS:
     filterForIdentifier.append({'identifier': eachScrapingFunction.identifier})
-
 
 
 class Blogs(Resource):
 
     def get(self):
-        inputArgs = {
-                'status': fields.Str(missing='new',location='querystring'),
-                'tag': fields.Str(missing=None,location='querystring'),
-                'identifier': fields.Str(missing=None,location='querystring'),
-                'searchtext' : fields.Str(missing=None,location='querystring')
+        parsed_query_string = dict(parse.parse_qsl(request.query_string.decode('ASCII')))
+        argsRecieved = {
+            'status': parsed_query_string.get("status") or "new",
+            'tag': parsed_query_string.get("tag") or None,
+            'identifier': parsed_query_string.get("identifier") or None,
+            'searchtext': parsed_query_string.get("searchtext") or None
         }
 
-        
-
-        argsRecieved = parser.parse(inputArgs,request)
-
-
-        # checking if status value is new then showing visited also
         status = argsRecieved['status']
 
         whereClause = {}
 
         if status == "new":
-            #whereClause["$and"] = [{"$or": [{'status': 'new'},{'status':'visited'}]},{"$or": filterForIdentifier }]
-            pass
-        else : 
+            whereClause["$and"] = [{"$or": [{'status': 'new'}, {'status': 'visited'}]}, {"$or": filterForIdentifier}]
+        else:
             whereClause['status'] = argsRecieved['status']
 
-        if argsRecieved['tag'] != None :
+        if argsRecieved['tag'] != None:
             whereClause['tags'] = argsRecieved['tag']
 
-        if argsRecieved['identifier'] != None :
+        if argsRecieved['identifier'] != None:
             whereClause['identifier'] = argsRecieved['identifier']
 
-        if argsRecieved['searchtext'] != None :
-            #whereClause['label'] = {"$regex": argsRecieved['searchtext'],"$options":"$i"}
-            whereClause['$or'] =[
-                                    {'label' :   {"$regex": argsRecieved['searchtext'],"$options":"$i"}},
-                                    {'tags' :   {"$regex": argsRecieved['searchtext'],"$options":"$i"}}
+        if argsRecieved['searchtext'] != None:
+            whereClause['$or'] = [
+                {'label': {"$regex": argsRecieved['searchtext'], "$options": "$i"}},
+                {'tags': {"$regex": argsRecieved['searchtext'], "$options": "$i"}}
 
-                                ]
-        
-        result = DatabaseManager.find(Post,whereClause,responseFormat="json")
+            ]
+        print("======= {}".format(whereClause))
+        result = DatabaseManager.find(Post, whereClause, responseFormat="json")
 
+        for eachBlog in result:
+            eachBlog['createdAt'] = DateManager.getHumanRedableDateDiff(DateManager.getTodaysDate(),
+                                                                        eachBlog['createdAt'])
 
-        for eachBlog in result : 
-            eachBlog['createdAt'] = DateManager.getHumanRedableDateDiff(DateManager.getTodaysDate(),eachBlog['createdAt'])
-
-        return result,200
-
-
-
-#    def options(self):
-#        return {'Allow' : 'GET, POST,PUT, DELETE' }, 200, \
-#                {       'Access-Control-Allow-Origin': '*',
-#                        'Access-Control-Allow-Headers': 'Authorization, Auth, Token, Access-Token, Access_Token, AccessToken, Code',
-#                        'Access-Control-Allow-Methods': 'PUT,GET,POST,DELETE'}
-#
-#
-#
-#
-#
-#
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return result, 200
