@@ -18,6 +18,7 @@ class MediumTagBased(Task):
             {"tagName": "docker", "tags": ["medium", "docker"]},
             {"tagName": "kubernetes", "tags": ["medium", "kubernetes"]},
             {"tagName": "python", "tags": ["medium", "python"]},
+            {"tagName": "redis", "tags": ["medium", "redis"]},
 
 
         ]
