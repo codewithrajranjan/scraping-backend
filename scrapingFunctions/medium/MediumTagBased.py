@@ -13,11 +13,11 @@ class MediumTagBased(Task):
         self.tags = ['nodejs']
 
         self.tagData = [
-            {"tagName": "nodejs", "tags": ["medium", "nodejs"]},
-            {"tagName": "kafka", "tags": ["medium", "kafka"]},
-            {"tagName": "docker", "tags": ["medium", "docker"]},
-            {"tagName": "kubernetes", "tags": ["medium", "kubernetes"]},
-            {"tagName": "python", "tags": ["medium", "python"]},
+            # {"tagName": "nodejs", "tags": ["medium", "nodejs"]},
+            # {"tagName": "kafka", "tags": ["medium", "kafka"]},
+            # {"tagName": "docker", "tags": ["medium", "docker"]},
+            # {"tagName": "kubernetes", "tags": ["medium", "kubernetes"]},
+            # {"tagName": "python", "tags": ["medium", "python"]},
             {"tagName": "redis", "tags": ["medium", "redis"]},
 
 
@@ -31,15 +31,15 @@ class MediumTagBased(Task):
 
             # making the url to search
             url = self.url.format(tag_to_search)
-            response = RequestService.get(url, headers={'User-Agent': 'Mozilla/5.0'})
-            soup = BeautifulSoup(response.content, 'html.parser')
-            data = soup.select("[aria-label='Post Preview Title']")
-
+            print(url)
+            soup = RequestService.getFromSelenium(url, headers={'User-Agent': 'Mozilla/5.0'})
+            data = soup.find_all('article', attrs={"class": "ks"})
             for eachData in data:
                 try:
+                    result = eachData.find("a", attrs={"rel": "noopener follow"})
                     data = {
-                        "label": eachData.find('h2').string,
-                        "link": "https://medium.com{}".format(eachData.attrs["href"]),
+                        "label": result['aria-label'],
+                        "link": "https://medium.com{}".format(result['href']),
                         "identifier": self.identifier,
                         "tags": post_tags
                     }
